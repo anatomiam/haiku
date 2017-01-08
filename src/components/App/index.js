@@ -1,6 +1,6 @@
 import React from 'react';
-import Input from './Input';
-import './App.css';
+import Input from '../About/index.js';
+import './style.css';
 
 function App() {
   return (
