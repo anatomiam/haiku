@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { cleanLine } from './SyllableCheck';
+import * as utils from './PoetryParser';
 
 class Input extends Component {
     constructor() {
@@ -20,7 +20,7 @@ class Input extends Component {
     
 
     render() {
-        console.log(cleanLine("hey hey ** hey"));
+        console.log(utils.cleanLine("hey hey ** hey"));
         return (
             <div className="container">
             <form className="input-form">
