@@ -4,20 +4,20 @@ class Input extends Component {
     constructor() {
         super();
         this.state = {
-            value: ''
+            value: '5\n7\n5'
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
         this.setState({value: event.target.value});
-        console.log(this.state);
     }
 
     render() {
+        console.log(this.state);
         return (
-            <div>
-                <textarea className="textbox" value={this.state.value} onChange={this.handleChange} wrap="soft" autoFocus />
+            <div className="container">
+                <textarea className="textbox" value={this.state.value} onChange={this.handleChange} wrap="hard" autoFocus />
                 <h1>{this.state.value}</h1>
             </div>
         )
