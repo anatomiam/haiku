@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as utils from './PoetryParser';
 
 class Input extends Component {
     constructor() {
@@ -16,8 +17,10 @@ class Input extends Component {
         this.setState({[event.target.name]: event.target.value});
     }
 
+    
+
     render() {
-        console.log(this.state);
+        console.log(utils.cleanLine("hey hey ** hey"));
         return (
             <div className="container">
             <form className="input-form">
