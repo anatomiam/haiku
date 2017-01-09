@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as utils from './PoetryParser';
+import * as utils from '../../PoetryParser';
 
 class Input extends Component {
     constructor() {
@@ -22,14 +22,12 @@ class Input extends Component {
     render() {
         console.log(utils.cleanLine("hey hey ** hey"));
         return (
-            <div className="container">
-            <form className="input-form">
+           <form className="input-form">
                 <input type="text" className="textbox" name="line_1" value={this.state.line_1} onChange={this.handleChange} autoFocus />
                 <input type="text" className="textbox" name="line_2" value={this.state.line_2} onChange={this.handleChange} autoFocus />
                 <input type="text" className="textbox" name="line_3" value={this.state.line_3} onChange={this.handleChange} autoFocus />
             </form>
-            </div>
-        )
+       )
     }
 }
 

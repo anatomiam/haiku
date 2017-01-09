@@ -1,5 +1,5 @@
 import React from 'react';
-import Input from '../About/index.js';
+import Input from '../Input/index.js';
 import './style.css';
 
 function App() {
