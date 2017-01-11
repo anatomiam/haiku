@@ -1,6 +1,6 @@
 
 # Dockerfile
-FROM node:6
+FROM node:boron
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -19,5 +19,4 @@ RUN npm run build
 EXPOSE 9000
 
 # defined in package.json
-CMD [ "npm", "run", "start:server" ]
-view rawDockerfile hosted with ❤ by GitHub
+CMD [ "npm", "start" ]
