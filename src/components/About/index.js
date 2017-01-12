@@ -12,9 +12,11 @@ export default class About extends Component {
     const { className, ...props } = this.props;
     return (
       <div className={classnames('About', className)} {...props}>
-        <h1>
-          About
-        </h1>
+           <form method="post" action="/">
+            <input type="text" name="user" />
+            <input type="text" name="usddd" />
+            <input type="submit" value="Submit" />
+          </form>
       </div>
     );
   }
