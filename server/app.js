@@ -2,11 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const bodyParser = require('body-parser');
-const spawn = require('child_process').spawn;
-const processx = spawn("python", ["python/poetryparser.py"]);
-const util = require('util');
-const poetryparser = require('./PoetryParser');
-
+const pr = require('./PoetryParser');
+const pronouncing = require('pronouncing');
 const app = express();
 
 
@@ -32,22 +29,31 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post("/", function (req, res) {
-//     // Handle normal output
-// processx.stdout.on('data', (data) => {
-//     console.log(String.fromCharCode.apply(null, data));
-//     });
+
     console.log(req.body.line_1);
     console.log(req.body.line_2);
     console.log(req.body.line_3);
 
-    x = poetryparser(String(req.body.line_1));
+    x = pr.cleanLine(String(req.body.line_1));
+    y = pr.cleanLine(String(req.body.line_2));
+    z = pr.cleanLine(String(req.body.line_3));
 
-    console.log(x);
-    // Write data (remember to send only strings or numbers, otherwhise python wont understand)
-    // var data = JSON.stringify("Hello World There Are None");
-    // processx.stdin.write(data);
-    // End data write
-    // processx.stdin.end();
+    console.log(x, y, z);
+
+    x = pr.sounds(x);
+    y = pr.sounds(y);
+    z = pr.sounds(z);
+
+    console.log(x, y, z);
+
+    console.log(pronouncing.syllableCount(x), pronouncing.syllableCount(y), pronouncing.syllableCount(x));
+
+    x = pr.stresses(x);
+    y = pr.stresses(y);
+    z = pr.stresses(z);
+
+    console.log(x, y, z);
+
     res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
     });
 
