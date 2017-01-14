@@ -48,8 +48,8 @@ class Input extends Component {
             line_3: this.state.line_3
             })
             .then(function (response) {
-                // console.log(response);
-               self.checkSyllables(response.data);
+                console.log(response.data);
+            //    self.checkSyllables(response.data);
             })
             .catch(function (error) {
                 console.log(error);
