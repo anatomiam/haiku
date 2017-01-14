@@ -6,9 +6,6 @@ const pr = require('./PoetryParser');
 const pronouncing = require('pronouncing');
 const app = express();
 
-
-
-
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 
@@ -56,16 +53,32 @@ app.post("/", function (req, res) {
     stresses_line_2 = pr.stresses(sounds_line_2);
     stresses_line_3 = pr.stresses(sounds_line_3);
 
-    console.log(stresses_line_1, stresses_line_2, stresses_line_3);
+    // console.log(stresses_line_1, stresses_line_2, stresses_line_3);
 
     newLine_1 = pr.sameStress(stresses_line_1);
     newLine_2 = pr.sameStress(stresses_line_2);
     newLine_3 = pr.sameStress(stresses_line_3);
 
+    newRhyme_1 = pr.sameRhymes(clean_line_1);
+    newRhyme_2 = pr.sameRhymes(clean_line_2);
+    newRhyme_3 = pr.sameRhymes(clean_line_3);
+
+    // console.log(newLine_1, newRhyme_1);
+    // console.log(newLine_2, newRhyme_2);
+    // console.log(newLine_3, newRhyme_3);
+
+    stressAndRhyme_1 = pr.sameStressAndRhyme(newLine_1, newRhyme_1);
+    stressAndRhyme_2 = pr.sameStressAndRhyme(newLine_2, newRhyme_2);
+    stressAndRhyme_3 = pr.sameStressAndRhyme(newLine_3, newRhyme_3);
+
+    // console.log(stressAndRhyme_1);
+    // console.log(stressAndRhyme_2);
+    // console.log(stressAndRhyme_3);
+
     res.send({
-        newLine_1: newLine_1,
-        newLine_2: newLine_2,
-        newLine_3: newLine_3
+        stressAndRhyme_1: stressAndRhyme_1,
+        stressAndRhyme_2: stressAndRhyme_2,
+        stressAndRhyme_3: stressAndRhyme_3
     })
     });
 
