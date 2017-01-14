@@ -1,4 +1,4 @@
-const pr = require('pronouncing');
+const pronouncing = require('pronouncing');
 
 exports.cleanLine = function(line) {
     var no_white_space = line.trim()
@@ -18,7 +18,7 @@ exports.sounds = function(words) {
             sounds.push(word);
         }
         else {
-            sound = pr.phonesForWord(word);
+            sound = pronouncing.phonesForWord(word);
             if (sound.length == 0) {
                 sounds.push('*');
             }
@@ -37,9 +37,23 @@ exports.stresses = function(sounds) {
             stresses.push(sound);
         }
         else {
-            stresses.push(pr.stresses(sound));
+            stresses.push(pronouncing.stresses(sound));
         }
     })
     return stresses;
+}
+
+exports.sameStress = function(stresses) {
+    var sameStress = [];
+    var newLine = []
+
+    stresses.map(function(stress) {
+        sameStress.push(pronouncing.searchStresses(stress));
+    }) 
+    sameStress.map(function(newStress) {
+        newLine.push(newStress[Math.floor(Math.random() * newStress.length)]);
+    })
+
+    return newLine;
 }
 
