@@ -34,30 +34,34 @@ app.post("/", function (req, res) {
     console.log(req.body.line_2);
     console.log(req.body.line_3);
 
-    x = pr.cleanLine(String(req.body.line_1));
-    y = pr.cleanLine(String(req.body.line_2));
-    z = pr.cleanLine(String(req.body.line_3));
+    clean_line_1 = pr.cleanLine(String(req.body.line_1));
+    clean_line_2 = pr.cleanLine(String(req.body.line_2));
+    clean_line_3 = pr.cleanLine(String(req.body.line_3));
 
-    console.log(x, y, z);
+    console.log(clean_line_1, clean_line_2, clean_line_3);
 
-    x = pr.sounds(x);
-    y = pr.sounds(y);
-    z = pr.sounds(z);
+    sounds_line_1 = pr.sounds(clean_line_1);
+    sounds_line_2 = pr.sounds(clean_line_2);
+    sounds_line_3 = pr.sounds(clean_line_3);
 
-    console.log(x, y, z);
+    console.log(sounds_line_1, sounds_line_2, sounds_line_3);
 
-    console.log(pronouncing.syllableCount(x), pronouncing.syllableCount(y), pronouncing.syllableCount(x));
+    num_syllables_1 = pronouncing.syllableCount(sounds_line_1);
+    num_syllables_2 = pronouncing.syllableCount(sounds_line_2);
+    num_syllables_3 = pronouncing.syllableCount(sounds_line_3);
 
-    x = pr.stresses(x);
-    y = pr.stresses(y);
-    z = pr.stresses(z);
+    console.log(num_syllables_1, num_syllables_2, num_syllables_3);
 
-    console.log(x, y, z);
+    stresses_line_1 = pr.stresses(sounds_line_1);
+    stresses_line_2 = pr.stresses(sounds_line_2);
+    stresses_line_3 = pr.stresses(sounds_line_3);
+
+    console.log(stresses_line_1, stresses_line_2, stresses_line_3);
 
     res.send({
-        x: x,
-        y: y,
-        z: z
+        num_syllables_1: num_syllables_1,
+        num_syllables_2: num_syllables_2,
+        num_syllables_3: num_syllables_3
     })
     });
 
