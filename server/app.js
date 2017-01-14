@@ -54,7 +54,11 @@ app.post("/", function (req, res) {
 
     console.log(x, y, z);
 
-    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+    res.send({
+        x: x,
+        y: y,
+        z: z
+    })
     });
 
 // Always return the main index.html, so react-router render the route in the client

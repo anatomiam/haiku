@@ -26,7 +26,7 @@ class Input extends Component {
             line_3: this.state.line_3
             })
             .then(function (response) {
-                console.log(response);
+                console.log(response.data);
             })
             .catch(function (error) {
                 console.log(error);
