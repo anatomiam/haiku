@@ -50,9 +50,9 @@ exports.sameStress = function(stresses) {
     stresses.map(function(stress) {
         sameStress.push(pronouncing.searchStresses(stress));
     }) 
-    sameStress.map(function(newStress) {
-        newLine.push(newStress[Math.floor(Math.random() * newStress.length)]);
-    })
+    // sameStress.map(function(newStress) {
+    //     newLine.push(newStress[Math.floor(Math.random() * newStress.length)]);
+    // })
 
     return sameStress;
 }
@@ -64,9 +64,9 @@ exports.sameRhymes = function(words) {
     words.map(function(word) {
         wordRhymes.push(pronouncing.rhymes(word));
     })
-    wordRhymes.map(function(newWord) {
-        newLine.push(newWord[Math.floor(Math.random() * newWord.length)]);
-    })
+    // wordRhymes.map(function(newWord) {
+    //     newLine.push(newWord[Math.floor(Math.random() * newWord.length)]);
+    // })
 
     return wordRhymes;
 }
@@ -105,5 +105,21 @@ exports.sameStressAndRhyme = function(stressWords, rhymeWords) {
     console.log(newLines);
     // console.log(newLines);
     return newLines;
+}
+
+exports.removeUndefined = function(original, generated) {
+    newest = []
+    var i = 0;
+    generated.map(function(word) {
+        if (word == undefined) {
+            newest.push(original[i]);
+        }
+        else {
+            newest.push(word);
+        }
+        i++;
+    })
+    return newest;
+
 }
 

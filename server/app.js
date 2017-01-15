@@ -41,19 +41,19 @@ app.post("/", function (req, res) {
     sounds_line_2 = pr.sounds(clean_line_2);
     sounds_line_3 = pr.sounds(clean_line_3);
 
-    // console.log(sounds_line_1, sounds_line_2, sounds_line_3);
+    // console.log('sounds line', sounds_line_1);
 
     num_syllables_1 = pronouncing.syllableCount(sounds_line_1);
     num_syllables_2 = pronouncing.syllableCount(sounds_line_2);
     num_syllables_3 = pronouncing.syllableCount(sounds_line_3);
 
-    // console.log(num_syllables_1, num_syllables_2, num_syllables_3);
+    // console.log('num syll', num_syllables_1);
 
     stresses_line_1 = pr.stresses(sounds_line_1);
     stresses_line_2 = pr.stresses(sounds_line_2);
     stresses_line_3 = pr.stresses(sounds_line_3);
 
-    // console.log(stresses_line_1, stresses_line_2, stresses_line_3);
+    // console.log('stresses', stresses_line_1);
 
     newLine_1 = pr.sameStress(stresses_line_1);
     newLine_2 = pr.sameStress(stresses_line_2);
@@ -63,7 +63,7 @@ app.post("/", function (req, res) {
     newRhyme_2 = pr.sameRhymes(clean_line_2);
     newRhyme_3 = pr.sameRhymes(clean_line_3);
 
-    // console.log(newLine_1, newRhyme_1);
+    // console.log('new line', newLine_1, '\nnew rhyme', newRhyme_1);
     // console.log(newLine_2, newRhyme_2);
     // console.log(newLine_3, newRhyme_3);
 
@@ -71,9 +71,17 @@ app.post("/", function (req, res) {
     stressAndRhyme_2 = pr.sameStressAndRhyme(newLine_2, newRhyme_2);
     stressAndRhyme_3 = pr.sameStressAndRhyme(newLine_3, newRhyme_3);
 
-    // console.log(stressAndRhyme_1);
-    // console.log(stressAndRhyme_2);
-    // console.log(stressAndRhyme_3);
+    console.log(stressAndRhyme_1);
+    console.log(stressAndRhyme_2);
+    console.log(stressAndRhyme_3);
+
+    final_1 = pr.removeUndefined(clean_line_1, stressAndRhyme_1);
+    final_2 = pr.removeUndefined(clean_line_2, stressAndRhyme_2);
+    final_3 = pr.removeUndefined(clean_line_3, stressAndRhyme_3);
+
+    console.log(final_1);
+    console.log(final_2);
+    console.log(final_3);
 
     res.send({
         stressAndRhyme_1: stressAndRhyme_1,
