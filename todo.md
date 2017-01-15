@@ -1,0 +1,5 @@
+- enforce syllable count
+- preserve punctuation
+- reduce cmu dictionary to a more common set of words
+- mimic sentence structure
+- colored phonectic patterns

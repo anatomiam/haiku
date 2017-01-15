@@ -5,9 +5,12 @@ class Input extends Component {
     constructor() {
         super();
         this.state = {
-            line_1: '5',
-            line_2: '7',
-            line_3: '5'
+            line_1: '.',
+            line_2: '.',
+            line_3: '.',
+            new_line_1: '.',
+            new_line_2: '.',
+            new_line_3: '.'
         };
         this.handleChange = this
             .handleChange
@@ -57,9 +60,9 @@ class Input extends Component {
                 console.log(response.data.final_3);
 
                 self.setState({
-                    line_1: response.data.final_1.join(' '),
-                    line_2: response.data.final_2.join(' '),
-                    line_3: response.data.final_3.join(' ')
+                    new_line_1: response.data.final_1.join(' '),
+                    new_line_2: response.data.final_2.join(' '),
+                    new_line_3: response.data.final_3.join(' ')
                 })
                 //    self.checkSyllables(response.data.final_1);
                 // self.checkSyllables(response.data.final_2);
@@ -86,17 +89,23 @@ class Input extends Component {
                     name="line_2"
                     value={this.state.line_2}
                     onChange={this.handleChange}
-                    autoFocus/>
+                    />
                 <input
                     type="text"
                     className="textbox"
                     name="line_3"
                     value={this.state.line_3}
                     onChange={this.handleChange}
-                    autoFocus/>
+                    />
                 <a href="#" onClick={this.handleSubmit}>
                     <p className="full-circle"></p>
                 </a>
+                <p>
+                    {this.state.new_line_1}<br />
+                    {this.state.new_line_2}<br />
+                    {this.state.new_line_3}
+                </p>
+           
             </div>
         )
     }
