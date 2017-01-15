@@ -7,7 +7,8 @@ const pronouncing = require('pronouncing');
 const app = express();
 
 // Setup logger
-app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
+app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :stat' +
+        'us :res[content-length] :response-time ms'));
 
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
@@ -16,9 +17,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
  */
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+app.use(bodyParser.urlencoded({extended: false}));
 
 /**bodyParser.json(options)
  * Parses the text as JSON and exposes the resulting object on req.body.
@@ -64,8 +63,7 @@ app.post("/", function (req, res) {
     newRhyme_3 = pr.sameRhymes(clean_line_3);
 
     // console.log('new line', newLine_1, '\nnew rhyme', newRhyme_1);
-    // console.log(newLine_2, newRhyme_2);
-    // console.log(newLine_3, newRhyme_3);
+    // console.log(newLine_2, newRhyme_2); console.log(newLine_3, newRhyme_3);
 
     stressAndRhyme_1 = pr.sameStressAndRhyme(newLine_1, newRhyme_1);
     stressAndRhyme_2 = pr.sameStressAndRhyme(newLine_2, newRhyme_2);
@@ -83,16 +81,13 @@ app.post("/", function (req, res) {
     console.log(final_2);
     console.log(final_3);
 
-    res.send({
-        stressAndRhyme_1: stressAndRhyme_1,
-        stressAndRhyme_2: stressAndRhyme_2,
-        stressAndRhyme_3: stressAndRhyme_3
-    })
-    });
+    res.send({final_1: final_1, final_2: final_2, final_3: final_3})
+});
 
-// Always return the main index.html, so react-router render the route in the client
+// Always return the main index.html, so react-router render the route in the
+// client
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
 
 module.exports = app;
