@@ -22,18 +22,24 @@ class Input extends Component {
 
     checkSyllables(lines) {
         if (lines.num_syllables_1 != 5) {
+            return false;
             console.log('line 1 is not valid');
         } else {
+            return true;
             console.log('line 1 is valid');
         }
         if (lines.num_syllables_2 != 7) {
+            return false;
             console.log('line 2 is not valid');
         } else {
+            return true;
             console.log('line 2 is valid');
         }
         if (lines.num_syllables_3 != 5) {
+            return false;
             console.log('line 3 is not valid');
         } else {
+            return true;
             console.log('line 3 is valid');
         }
     }
@@ -58,12 +64,19 @@ class Input extends Component {
                 console.log(response.data.final_1);
                 console.log(response.data.final_2);
                 console.log(response.data.final_3);
-
+                
+                if (self.checkSyllables(response.data) == true) {
                 self.setState({
                     new_line_1: response.data.final_1.join(' '),
                     new_line_2: response.data.final_2.join(' '),
                     new_line_3: response.data.final_3.join(' ')
-                })
+                }) 
+                } 
+                else {
+                    self.setState({
+                        new_line_1: 'Incorrect number of syllables.'
+                    })
+                }
                 //    self.checkSyllables(response.data.final_1);
                 // self.checkSyllables(response.data.final_2);
                 // self.checkSyllables(response.data.final_3);

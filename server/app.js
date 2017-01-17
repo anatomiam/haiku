@@ -81,7 +81,14 @@ app.post("/", function (req, res) {
     console.log(final_2);
     console.log(final_3);
 
-    res.send({final_1: final_1, final_2: final_2, final_3: final_3})
+    res.send({
+        final_1: final_1,
+        final_2: final_2, 
+        final_3: final_3,
+        num_syllables_1: num_syllables_1,
+        num_syllables_2: num_syllables_2,
+        num_syllables_3: num_syllables_3
+    })
 });
 
 // Always return the main index.html, so react-router render the route in the
