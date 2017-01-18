@@ -1,4 +1,4 @@
-- enforce syllable count
+- refactor syllable count enforcement
 - preserve punctuation
 - reduce cmu dictionary to a more common set of words
 - mimic sentence structure

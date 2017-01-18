@@ -1,19 +1,19 @@
 const pronouncing = require('pronouncing');
 
-exports.cleanLine = function (line) {
-    var no_white_space = line.trim()
-    var lower_line = no_white_space.toLowerCase();
-    var split_line = lower_line.split(" ");
-    var words = [];
-    for (var i = 0; i < split_line.length; i++) {
-        words.push(split_line[i].replace(/[^A-Za-z0-9]+/g, ''))
-    }
+exports.cleanLine = (line) => {
+    let words = [];
+    line.trim()
+        .toLowerCase()
+        .split(" ")
+        .map((word) => {
+            words.push(word.replace(/[^A-Za-z0-9]+/g, ''))
+        });
     return words;
 }
 
-exports.sounds = function (words) {
-    var sounds = [];
-    words.map(function (word) {
+exports.sounds = (words) => {
+    let sounds = [];
+    words.map((word) => {
         if (word === ' ') {
             sounds.push(word);
         } else {
@@ -28,9 +28,9 @@ exports.sounds = function (words) {
     return sounds;
 }
 
-exports.stresses = function (sounds) {
-    var stresses = [];
-    sounds.map(function (sound) {
+exports.stresses = (sounds) => {
+    let stresses = [];
+    sounds.map((sound) => {
         if (sound == ' ' || sound == '*') {
             stresses.push(sound);
         } else {
@@ -40,40 +40,35 @@ exports.stresses = function (sounds) {
     return stresses;
 }
 
-exports.sameStress = function (stresses) {
-    var sameStress = [];
-    var newLine = []
-
-    stresses.map(function (stress) {
+exports.sameStress = (stresses) => {
+    let sameStress = [];
+    let newLine = []
+    stresses.map((stress) => {
         sameStress.push(pronouncing.searchStresses(stress));
     })
-    // sameStress.map(function(newStress) {
-    // newLine.push(newStress[Math.floor(Math.random() * newStress.length)]); })
 
     return sameStress;
 }
 
-exports.sameRhymes = function (words) {
-    var wordRhymes = [];
-    var newLine = [];
+exports.sameRhymes = (words) => {
+    let wordRhymes = [];
+    let newLine = [];
 
-    words.map(function (word) {
+    words.map((word) => {
         wordRhymes.push(pronouncing.rhymes(word));
     })
-    // wordRhymes.map(function(newWord) {
-    // newLine.push(newWord[Math.floor(Math.random() * newWord.length)]); })
 
     return wordRhymes;
 }
 
 function intersection_destructive(a, b) {
-    var result = [];
+    let result = [];
     while (a.length > 0 && b.length > 0) {
         if (a[0] < b[0]) {
             a.shift();
         } else if (a[0] > b[0]) {
             b.shift();
-        } else/* they're equal */
+        } else /* they're equal */
         {
             result.push(a.shift());
             b.shift();
@@ -82,29 +77,27 @@ function intersection_destructive(a, b) {
     return result;
 }
 
-exports.sameStressAndRhyme = function (stressWords, rhymeWords) {
-    var options = [];
-    var newOptions = [];
-    var newLines = [];
-    var i = 0;
-    stressWords.map(function (stresses) {
+exports.sameStressAndRhyme = (stressWords, rhymeWords) => {
+    let options = [];
+    let newOptions = [];
+    let newLines = [];
+    let i = 0;
+    
+    stressWords.map((stresses) => {
         options.push(intersection_destructive(stresses, rhymeWords[i]));
         i++;
     })
-
-    options.map(function (option) {
+    options.map((option) => {
         newLines.push(option[Math.floor(Math.random() * option.length)]);
     })
-    // console.log(options);
-    console.log(newLines);
-    // console.log(newLines);
+
     return newLines;
 }
 
-exports.removeUndefined = function (original, generated) {
+exports.removeUndefined = (original, generated) => {
     newest = []
-    var i = 0;
-    generated.map(function (word) {
+    let i = 0;
+    generated.map((word) => {
         if (word == undefined) {
             newest.push(original[i]);
         } else {
@@ -113,5 +106,20 @@ exports.removeUndefined = function (original, generated) {
         i++;
     })
     return newest;
+}
 
+exports.runHaikuThrough = (func, haiku, haiku2 = false) => {
+    lines = [];
+    if (haiku2 === false) {
+        haiku.map((line) => {
+            lines.push(func(line));
+        })
+    } else {
+        i = 0;
+        haiku.map((line) => {
+            lines.push(func(line, haiku2[i]));
+            i++;
+        })
+    }
+    return lines;
 }
