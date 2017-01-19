@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const bodyParser = require('body-parser');
-const pr = require('./PoetryParser');
+const pr = require('./poetryparser');
 const pronouncing = require('pronouncing');
 const app = express();
 
@@ -41,14 +41,10 @@ app.post("/", function (req, res) {
 
     finalHaiku = pr.runHaikuThrough(pr.removeUndefined, cleanHaiku, stressAndRhymeHaiku);
 
-    res.send({
-        final_1: finalHaiku[0],
-        final_2: finalHaiku[1],
-        final_3: finalHaiku[2],
-        num_syllables_1: numSyllablesHaiku[0],
-        num_syllables_2: numSyllablesHaiku[1],
-        num_syllables_3: numSyllablesHaiku[2]
-    });
+    res.send([
+        [finalHaiku[0], finalHaiku[1], finalHaiku[2]],
+        [numSyllablesHaiku[0], numSyllablesHaiku[1], numSyllablesHaiku[2]]
+    ]);
 }),
 
 // Always return the main index.html, so react-router render the route in the
