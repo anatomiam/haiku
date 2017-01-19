@@ -10,7 +10,8 @@ class Input extends Component {
             line_3: '.',
             new_line_1: '.',
             new_line_2: '.',
-            new_line_3: '.'
+            new_line_3: '.',
+            syllables: [5, 7, 5]
         };
         this.handleChange = this
             .handleChange
@@ -20,27 +21,11 @@ class Input extends Component {
             .bind(this);
     }
 
-    checkSyllables(lines) {
-        if (lines.num_syllables_1 != 5) {
+    checkSyllables(lines, num) {
+        if (lines != num) {
             return false;
-            console.log('line 1 is not valid');
         } else {
             return true;
-            console.log('line 1 is valid');
-        }
-        if (lines.num_syllables_2 != 7) {
-            return false;
-            console.log('line 2 is not valid');
-        } else {
-            return true;
-            console.log('line 2 is valid');
-        }
-        if (lines.num_syllables_3 != 5) {
-            return false;
-            console.log('line 3 is not valid');
-        } else {
-            return true;
-            console.log('line 3 is valid');
         }
     }
 
@@ -60,27 +45,22 @@ class Input extends Component {
                 line_2: this.state.line_2,
                 line_3: this.state.line_3
             })
-            .then(function (response) {
-                console.log(response.data.final_1);
-                console.log(response.data.final_2);
-                console.log(response.data.final_3);
-                
-                if (self.checkSyllables(response.data) == true) {
-                self.setState({
-                    new_line_1: response.data.final_1.join(' '),
-                    new_line_2: response.data.final_2.join(' '),
-                    new_line_3: response.data.final_3.join(' ')
-                }) 
-                } 
+            .then((response) => {
+            // console.log(response.data[1].map((line, i) =>  this.checkSyllables(line, self.state.syllables[i]) ).every(x=>x===true));
+                if (response.data[1]
+                    .map((line, i) => 
+                        this.checkSyllables(line, self.state.syllables[i]))
+                    .every(x => x === true)) {
+                        self.setState({
+                            new_line_1: response.data[0][0].join(' '),
+                            new_line_2: response.data[0][1].join(' '),
+                            new_line_3: response.data[0][2].join(' ')
+                        })}
                 else {
                     self.setState({
                         new_line_1: 'Incorrect number of syllables.'
-                    })
-                }
-                //    self.checkSyllables(response.data.final_1);
-                // self.checkSyllables(response.data.final_2);
-                // self.checkSyllables(response.data.final_3);
-            })
+                    })}
+                })
             .catch(function (error) {
                 console.log(error);
             });
