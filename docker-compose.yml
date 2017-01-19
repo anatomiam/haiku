@@ -1,0 +1,12 @@
+version: '2'
+services:
+ webpack:
+    build:
+      context: .
+      dockerfile: docker.webpack
+    image: haiku
+    container_name: haiku-container
+    ports:
+      - "3000:3000" ## webpack dev server
+    volumes:
+      - .:/haiku
