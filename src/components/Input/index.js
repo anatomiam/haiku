@@ -8,6 +8,7 @@ class Input extends Component {
             line_1: '.',
             line_2: '.',
             line_3: '.',
+            line_4: '.',
             new_line_1: '.',
             new_line_2: '.',
             new_line_3: '.',
@@ -34,6 +35,10 @@ class Input extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
+    }
+
+    handleKeyUp(event) {
+        console.log(event.target.value);
     }
 
     handleSubmit(event) {
@@ -89,6 +94,14 @@ class Input extends Component {
                     name="line_3"
                     value={this.state.line_3}
                     onChange={this.handleChange}
+                    />
+                <input 
+                    type="text"
+                    className="textbox"
+                    name="line_4"
+                    value={this.state.line_4}
+                    onChange={this.handleChange}
+                    onKeyUp={this.handleKeyUp}
                     />
                 <a href="#" onClick={this.handleSubmit}>
                     <p className="full-circle"></p>

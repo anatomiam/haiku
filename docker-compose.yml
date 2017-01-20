@@ -8,5 +8,6 @@ services:
     container_name: haiku-container
     ports:
       - "3000:3000" ## webpack dev server
+      - "9000:9000"
     volumes:
       - .:/haiku
