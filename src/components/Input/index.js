@@ -36,14 +36,6 @@ class Input extends Component {
         return lines === num; 
     }
 
-    new_count(word) {
-        word = word.toLowerCase();                                     //word.downcase!
-        if(word.length <= 3) { return 1; }                             //return 1 if word.length <= 3
-            word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');   //word.sub!(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
-            word = word.replace(/^y/, '');                                 //word.sub!(/^y/, '')
-        return word.match(/[aeiouy]{1,2}/g).length;                    //word.scan(/[aeiouy]{1,2}/).size
-        }
-
     handleChange(event) {
         // console.log(event);
         this.setState({
@@ -52,13 +44,17 @@ class Input extends Component {
     }
 
     handleKeyUp(event) {
-        console.log(this.new_count(event.target.value));
+        console.log((event.target));
         axios
-            .post('/', {
-                words: event.target.value
+            .post('/syllable_count', {
+                line: event.target.value,
+                name: event.target.name
             })
             .then((response) => {
                 console.log(response.data);
+                this.setState({
+                            ["new_" + response.data.name]: response.data.syllables
+                        })
             })
             .catch((error) => {
                 console.log(error)
@@ -69,7 +65,7 @@ class Input extends Component {
         // console.log(event);
         var self = this;
         axios
-            .post('/', {
+            .post('/submit_haiku', {
                 line_1: this.state.line_1,
                 line_2: this.state.line_2,
                 line_3: this.state.line_3

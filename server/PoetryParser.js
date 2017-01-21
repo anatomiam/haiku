@@ -19,7 +19,7 @@ exports.sounds = (words) => {
         } else {
             sound = pronouncing.phonesForWord(word);
             if (sound.length == 0) {
-                sounds.push('0');
+                sounds.push('_');
             } else {
                 sounds.push(sound[0]);
             }
@@ -31,7 +31,7 @@ exports.sounds = (words) => {
 exports.stresses = (sounds) => {
     let stresses = [];
     sounds.map((sound) => {
-        if (sound == ' ' || sound == '*') {
+        if (sound == ' ' || sound == '_') {
             stresses.push(sound);
         } else {
             stresses.push(pronouncing.stresses(sound));

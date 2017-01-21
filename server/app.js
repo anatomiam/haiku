@@ -15,43 +15,46 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.post('/', function (req, res) {
-    // clean = pr.cleanLine(req.body.words);
-    console.log(req.body);
+app.post('/syllable_count', function (req, res) {
+    syllables = pronouncing.syllableCount(
+                pr.sounds(
+                    pr.cleanLine(req.body.line)));
+    console.log(syllables);
     res.send({
-        cleaned: req.body.words
+        syllables: syllables,
+        name: req.body.name
     })
 }),
 
-// app.post("/", function (req, res) {
+app.post("/submit_haiku", function (req, res) {
 
-//     haiku = [
-//         req.body.line_1,
-//         req.body.line_2,
-//         req.body.line_3
-//         ];
+    haiku = [
+        req.body.line_1,
+        req.body.line_2,
+        req.body.line_3
+        ];
 
-//     cleanHaiku = pr.runHaikuThrough(pr.cleanLine, haiku);
+    cleanHaiku = pr.runHaikuThrough(pr.cleanLine, haiku);
 
-//     soundsHaiku = pr.runHaikuThrough(pr.sounds, cleanHaiku);
+    soundsHaiku = pr.runHaikuThrough(pr.sounds, cleanHaiku);
 
-//     numSyllablesHaiku = pr.runHaikuThrough(pronouncing.syllableCount, soundsHaiku);
+    numSyllablesHaiku = pr.runHaikuThrough(pronouncing.syllableCount, soundsHaiku);
 
-//     stressHaiku = pr.runHaikuThrough(pr.stresses, soundsHaiku);
+    stressHaiku = pr.runHaikuThrough(pr.stresses, soundsHaiku);
 
-//     newLineHaiku = pr.runHaikuThrough(pr.sameStress, stressHaiku);
+    newLineHaiku = pr.runHaikuThrough(pr.sameStress, stressHaiku);
 
-//     newRhymeHaiku = pr.runHaikuThrough(pr.sameRhymes, cleanHaiku);
+    newRhymeHaiku = pr.runHaikuThrough(pr.sameRhymes, cleanHaiku);
 
-//     stressAndRhymeHaiku = pr.runHaikuThrough(pr.sameStressAndRhyme, newLineHaiku, newRhymeHaiku);
+    stressAndRhymeHaiku = pr.runHaikuThrough(pr.sameStressAndRhyme, newLineHaiku, newRhymeHaiku);
 
-//     finalHaiku = pr.runHaikuThrough(pr.removeUndefined, cleanHaiku, stressAndRhymeHaiku);
+    finalHaiku = pr.runHaikuThrough(pr.removeUndefined, cleanHaiku, stressAndRhymeHaiku);
 
-//     res.send([
-//         [finalHaiku[0], finalHaiku[1], finalHaiku[2]],
-//         [numSyllablesHaiku[0], numSyllablesHaiku[1], numSyllablesHaiku[2]]
-//     ]);
-// }),
+    res.send([
+        [finalHaiku[0], finalHaiku[1], finalHaiku[2]],
+        [numSyllablesHaiku[0], numSyllablesHaiku[1], numSyllablesHaiku[2]]
+    ]);
+}),
 
 // Always return the main index.html, so react-router render the route in the
 // client
