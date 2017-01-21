@@ -8,7 +8,7 @@ class Input extends Component {
             line_1: '.',
             line_2: '.',
             line_3: '.',
-            line_4: '.',
+            // line_4: '.',
             new_line_1: '.',
             new_line_2: '.',
             new_line_3: '.',
@@ -20,14 +20,20 @@ class Input extends Component {
         this.handleSubmit = this
             .handleSubmit
             .bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
     }
 
+    // <input 
+    //                 type="text"
+    //                 className="textbox"
+    //                 name="line_4"
+    //                 value={this.state.line_4}
+    //                 onChange={this.handleChange}
+    //                 onKeyUp={this.handleKeyUp}
+    //                 />
+
     checkSyllables(lines, num) {
-        if (lines != num) {
-            return false;
-        } else {
-            return true;
-        }
+        return lines === num; 
     }
 
     handleChange(event) {
@@ -38,7 +44,17 @@ class Input extends Component {
     }
 
     handleKeyUp(event) {
-        console.log(event.target.value);
+        // console.log(event.target.value);
+        axios
+            .post('/', {
+                words: event.target.data
+            })
+            .then((response) => {
+                console.log(response.data.cleaned);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     handleSubmit(event) {
@@ -66,7 +82,7 @@ class Input extends Component {
                         new_line_1: 'Incorrect number of syllables.'
                     })}
                 })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
     }
@@ -80,6 +96,7 @@ class Input extends Component {
                     name="line_1"
                     value={this.state.line_1}
                     onChange={this.handleChange}
+                    onKeyUp={this.handleKeyUp}
                     autoFocus/>
                 <input
                     type="text"
@@ -87,6 +104,7 @@ class Input extends Component {
                     name="line_2"
                     value={this.state.line_2}
                     onChange={this.handleChange}
+                    onKeyUp={this.handleKeyUp}
                     />
                 <input
                     type="text"
@@ -94,15 +112,9 @@ class Input extends Component {
                     name="line_3"
                     value={this.state.line_3}
                     onChange={this.handleChange}
-                    />
-                <input 
-                    type="text"
-                    className="textbox"
-                    name="line_4"
-                    value={this.state.line_4}
-                    onChange={this.handleChange}
                     onKeyUp={this.handleKeyUp}
                     />
+                
                 <a href="#" onClick={this.handleSubmit}>
                     <p className="full-circle"></p>
                 </a>
