@@ -36,6 +36,14 @@ class Input extends Component {
         return lines === num; 
     }
 
+    new_count(word) {
+        word = word.toLowerCase();                                     //word.downcase!
+        if(word.length <= 3) { return 1; }                             //return 1 if word.length <= 3
+            word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');   //word.sub!(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
+            word = word.replace(/^y/, '');                                 //word.sub!(/^y/, '')
+        return word.match(/[aeiouy]{1,2}/g).length;                    //word.scan(/[aeiouy]{1,2}/).size
+        }
+
     handleChange(event) {
         // console.log(event);
         this.setState({
@@ -44,13 +52,13 @@ class Input extends Component {
     }
 
     handleKeyUp(event) {
-        // console.log(event.target.value);
+        console.log(this.new_count(event.target.value));
         axios
             .post('/', {
-                words: event.target.data
+                words: event.target.value
             })
             .then((response) => {
-                console.log(response.data.cleaned);
+                console.log(response.data);
             })
             .catch((error) => {
                 console.log(error)

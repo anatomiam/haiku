@@ -12,16 +12,14 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
-
-app.use(bodyParser.urlencoded({extended: false}));
-
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/', function (req, res) {
-    clean = pr.cleanLine(req.body.words);
-    console.log(req);
+    // clean = pr.cleanLine(req.body.words);
+    console.log(req.body);
     res.send({
-        cleaned: clean
+        cleaned: req.body.words
     })
 }),
 
