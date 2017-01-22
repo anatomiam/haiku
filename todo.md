@@ -1,5 +1,11 @@
-- refactor syllable count enforcement
 - preserve punctuation
 - reduce cmu dictionary to a more common set of words
-- mimic sentence structure
+- description div
+- mimic sentence structure, pos tagger
 - colored phonectic patterns
+- add fallback syllable count to increase accuracy for non matched words
+- down the road:
+- --- expand from haiku to other forms of poetry
+- --- --- http://www.poemofquotes.com/articles/poetry_forms.php
+- --- drop down menu of each type
+- --- custom poetic form builder

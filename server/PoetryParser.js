@@ -1,4 +1,5 @@
 const pronouncing = require('pronouncing');
+const _ = require('lodash');
 
 exports.cleanLine = (line) => {
     let words = [];
@@ -61,31 +62,13 @@ exports.sameRhymes = (words) => {
     return wordRhymes;
 }
 
-function intersection_destructive(a, b) {
-    let result = [];
-    while (a.length > 0 && b.length > 0) {
-        if (a[0] < b[0]) {
-            a.shift();
-        } else if (a[0] > b[0]) {
-            b.shift();
-        } else /* they're equal */
-        {
-            result.push(a.shift());
-            b.shift();
-        }
-    }
-    return result;
-}
-
 exports.sameStressAndRhyme = (stressWords, rhymeWords) => {
     let options = [];
     let newOptions = [];
     let newLines = [];
-    let i = 0;
     
-    stressWords.map((stresses) => {
-        options.push(intersection_destructive(stresses, rhymeWords[i]));
-        i++;
+    stressWords.map((stresses, i) => {
+        options.push(_.intersection(stresses, rhymeWords[i]));
     })
     options.map((option) => {
         newLines.push(option[Math.floor(Math.random() * option.length)]);
@@ -96,14 +79,12 @@ exports.sameStressAndRhyme = (stressWords, rhymeWords) => {
 
 exports.removeUndefined = (original, generated) => {
     newest = []
-    let i = 0;
-    generated.map((word) => {
+    generated.map((word, i) => {
         if (word == undefined) {
             newest.push(original[i]);
         } else {
             newest.push(word);
         }
-        i++;
     })
     return newest;
 }
@@ -115,10 +96,8 @@ exports.runHaikuThrough = (func, haiku, haiku2 = false) => {
             lines.push(func(line));
         })
     } else {
-        i = 0;
-        haiku.map((line) => {
+        haiku.map((line, i) => {
             lines.push(func(line, haiku2[i]));
-            i++;
         })
     }
     return lines;

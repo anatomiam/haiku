@@ -8,29 +8,15 @@ class Input extends Component {
             line_1: '.',
             line_2: '.',
             line_3: '.',
-            // line_4: '.',
             new_line_1: '.',
             new_line_2: '.',
             new_line_3: '.',
             syllables: [5, 7, 5]
         };
-        this.handleChange = this
-            .handleChange
-            .bind(this);
-        this.handleSubmit = this
-            .handleSubmit
-            .bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
     }
-
-    // <input 
-    //                 type="text"
-    //                 className="textbox"
-    //                 name="line_4"
-    //                 value={this.state.line_4}
-    //                 onChange={this.handleChange}
-    //                 onKeyUp={this.handleKeyUp}
-    //                 />
 
     checkSyllables(lines, num) {
         return lines === num; 
@@ -71,8 +57,7 @@ class Input extends Component {
                 line_3: this.state.line_3
             })
             .then((response) => {
-            // console.log(response.data[1].map((line, i) =>  this.checkSyllables(line, self.state.syllables[i]) ).every(x=>x===true));
-                if (response.data[1]
+               if (response.data[1]
                     .map((line, i) => 
                         this.checkSyllables(line, self.state.syllables[i]))
                     .every(x => x === true)) {
@@ -127,7 +112,6 @@ class Input extends Component {
                     {this.state.new_line_2}<br />
                     {this.state.new_line_3}
                 </p>
-           
             </div>
         )
     }
