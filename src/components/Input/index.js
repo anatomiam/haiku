@@ -49,7 +49,6 @@ class Input extends Component {
 
     handleSubmit(event) {
         // console.log(event);
-        var self = this;
         axios
             .post('/submit_haiku', {
                 line_1: this.state.line_1,
@@ -59,15 +58,15 @@ class Input extends Component {
             .then((response) => {
                if (response.data[1]
                     .map((line, i) => 
-                        this.checkSyllables(line, self.state.syllables[i]))
+                        this.checkSyllables(line, this.state.syllables[i]))
                     .every(x => x === true)) {
-                        self.setState({
+                        this.setState({
                             new_line_1: response.data[0][0].join(' '),
                             new_line_2: response.data[0][1].join(' '),
                             new_line_3: response.data[0][2].join(' ')
                         })}
                 else {
-                    self.setState({
+                    this.setState({
                         new_line_1: 'Incorrect number of syllables.'
                     })}
                 })

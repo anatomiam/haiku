@@ -1,7 +1,7 @@
 - preserve punctuation
 - reduce cmu dictionary to a more common set of words
 - description div
-- mimic sentence structure, pos tagger
+- mimic sentence structure, pos tagger + display
 - colored phonectic patterns
 - add fallback syllable count to increase accuracy for non matched words
 - down the road:
@@ -9,3 +9,4 @@
 - --- --- http://www.poemofquotes.com/articles/poetry_forms.php
 - --- drop down menu of each type
 - --- custom poetic form builder
+- --- suggestions?
