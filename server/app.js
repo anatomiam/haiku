@@ -34,7 +34,10 @@ app.post("/submit_haiku", function (req, res) {
         req.body.line_3
         ];
 
+
     cleanHaiku = pr.runHaikuThrough(pr.cleanLine, haiku);
+
+    console.log(pr.tagLine(req.body.line_1.split(' ')));
 
     soundsHaiku = pr.runHaikuThrough(pr.sounds, cleanHaiku);
 
