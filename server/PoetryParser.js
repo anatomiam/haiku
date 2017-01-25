@@ -96,15 +96,6 @@ exports.removeUndefined = (original, generated) => {
     return newest;
 }
 
-exports.tagLine = (line) => {
-    let tagger = new Tagger(lexicon, rules, defaultCategory, function(err) {
-    if (err) {
-        console.log(err);
-        }
-    })
-    return tagger.tag(line);
-}
-
 exports.runHaikuThrough = (func, haiku, haiku2 = false) => {
     lines = [];
     if (haiku2 === false) {

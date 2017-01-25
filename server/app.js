@@ -5,6 +5,13 @@ const bodyParser = require('body-parser');
 const pr = require('./poetryparser');
 const pronouncing = require('pronouncing');
 const app = express();
+const natural = require('natural');
+
+let Tagger = natural.BrillPOSTagger;
+let baseFolder = './node_modules/natural/lib/natural/brill_pos_tagger';
+let rules = baseFolder + '/data/English/tr_from_posjs.txt';
+let lexicon = baseFolder + '/data/English/lexicon_from_posjs.json';
+let defaultCategory = 'N';
 
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :stat' +
@@ -37,7 +44,13 @@ app.post("/submit_haiku", function (req, res) {
 
     cleanHaiku = pr.runHaikuThrough(pr.cleanLine, haiku);
 
-    console.log(pr.tagLine(req.body.line_1.split(' ')));
+    let tagger = new Tagger(lexicon, rules, defaultCategory, function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(tagger.tag(cleanHaiku[0]));
+        }
+    })
 
     soundsHaiku = pr.runHaikuThrough(pr.sounds, cleanHaiku);
 
