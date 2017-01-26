@@ -1,12 +1,5 @@
 const pronouncing = require('pronouncing');
 const _ = require('lodash');
-const natural = require('natural');
-
-let Tagger = natural.BrillPOSTagger;
-let baseFolder = './node_modules/natural/lib/natural/brill_pos_tagger';
-let rules = baseFolder + '/data/English/tr_from_posjs.txt';
-let lexicon = baseFolder + '/data/English/lexicon_from_posjs.json';
-let defaultCategory = 'N';
 
 exports.cleanLine = (line) => {
     let words = [];
