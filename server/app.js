@@ -51,24 +51,39 @@ app.post("/submit_haiku", function (req, res) {
             let one = tagger.tag(cleanHaiku[0]);
             let two = tagger.tag(cleanHaiku[1]);
             let three = tagger.tag(cleanHaiku[2]);
-            
+
 
             one.map((pos) => {
                 switch(pos[1]) {
                     case "NN":
+                    case "NNS":
+                    case "NNP":
+                    case "NNPS":
+                    case "WP":
+                    case "WP$":
                         console.log(pos[0] + " is a " + pos[1] + "!");
                         break;
                     case "JJ":
+                    case "JJR":
+                    case "JJS":
+                    case "NN":
                         console.log(pos[0] + " is a " + pos[1] + "!");
                         break;
                     case "VB":
+                    case "VBD":
+                    case "VBG":
+                    case "VBN":
+                    case "VBP":
+                    case "VBZ":
                         console.log(pos[0] + " is a " + pos[1] + "!");
                         break;
                     case "RB":
+                    case "RBR":
+                    case "RBS":
                         console.log(pos[0] + " is a " + pos[1] + "!");
                         break;
                     default:
-                        console.log("not recognized yet");
+                        console.log("not recognized yet, but " + pos[0] + " is a " + pos[1] + "!");
                 }
             })
         }
