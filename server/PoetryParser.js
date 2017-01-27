@@ -102,3 +102,12 @@ exports.runHaikuThrough = (func, haiku, haiku2 = false) => {
     }
     return lines;
 }
+
+exports.parseLibrary = (library) => {
+    words = [];
+    _.forEach(library.split("\n"), (word) => {
+        if (word.length == 0) { return; }
+        else { words.push(word) }
+    })
+    return words;
+}
