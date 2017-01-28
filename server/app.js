@@ -61,6 +61,7 @@ app.post("/submit_haiku", function (req, res) {
 
             one.map((pos) => {
                 switch(pos[1]) {
+                    case "N":
                     case "NN":
                     case "NNS":
                     case "NNP":
@@ -105,7 +106,11 @@ app.post("/submit_haiku", function (req, res) {
 
     newRhymeHaiku = pr.runHaikuThrough(pr.sameRhymes, cleanHaiku);
 
-    stressAndRhymeHaiku = pr.runHaikuThrough(pr.sameStressAndRhyme, newLineHaiku, newRhymeHaiku);
+    stressAndRhymeLists = pr.runHaikuThrough(pr.intersectTwoLines, newLineHaiku, newRhymeHaiku);
+
+    // posList = pr.runHaikuThrough(pr.intersectTwoLines, newLineHaiku, newRhymeHaiku);
+
+    stressAndRhymeHaiku = pr.runHaikuThrough(pr.randomWord, stressAndRhymeLists);
 
     finalHaiku = pr.runHaikuThrough(pr.removeUndefined, cleanHaiku, stressAndRhymeHaiku);
 

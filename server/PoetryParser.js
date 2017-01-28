@@ -67,20 +67,25 @@ exports.sameRhymes = (words) => {
     return wordRhymes;
 }
 
-// takes the results of sameStress and sameRhyme and returns the common words between the arrays 
-exports.sameStressAndRhyme = (stressWords, rhymeWords) => {
-    let options = [];
-    let newOptions = [];
-    let newLines = [];
+// takes an array of arrays, takes common words between each inside array
+exports.intersectTwoLines = (array1, array2) => {
+    let intersected = [];
     
-    stressWords.map((stresses, i) => {
-        options.push(_.intersection(stresses, rhymeWords[i]));
-    })
-    options.map((option) => {
-        newLines.push(option[_.random(option.length)]);
+    array1.map((words, i) => {
+        intersected.push(_.intersection(words, array2[i]));
     })
 
-    return newLines;
+    return intersected;
+}
+
+// takes array of arrays, return random for each inside array 
+exports.randomWord = (line) => {
+    let newLine = []
+        line.map((words) => {
+            newLine.push(words[_.random(words.length)])
+        })
+
+    return newLine
 }
 
 // takes the original array of words and the array of newly generated words
