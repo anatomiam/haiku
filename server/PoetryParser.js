@@ -77,7 +77,7 @@ exports.sameStressAndRhyme = (stressWords, rhymeWords) => {
         options.push(_.intersection(stresses, rhymeWords[i]));
     })
     options.map((option) => {
-        newLines.push(option[Math.floor(Math.random() * option.length)]);
+        newLines.push(option[_.random(option.length)]);
     })
 
     return newLines;
@@ -114,7 +114,7 @@ exports.runHaikuThrough = (func, haiku, haiku2 = false) => {
     return lines;
 }
 
-
+// takes a file path to list of words and returns an array of each word in the file
 exports.parseLibrary = (library) => {
     words = [];
     _.forEach(library.split("\n"), (word) => {
