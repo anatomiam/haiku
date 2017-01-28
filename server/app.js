@@ -19,9 +19,14 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
+
+// for parsing application/json
 app.use(bodyParser.json());
+
+// for parsing application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
 
+// catches post on keyup and returns current syllable count for the line
 app.post('/syllable_count', function (req, res) {
     syllables = pronouncing.syllableCount(
                 pr.sounds(
@@ -32,6 +37,7 @@ app.post('/syllable_count', function (req, res) {
         name: req.body.name
     })
 }),
+
 
 app.post("/submit_haiku", function (req, res) {
 
