@@ -6,6 +6,8 @@ const pr = require('./poetryparser');
 const pronouncing = require('pronouncing');
 const app = express();
 const natural = require('natural');
+var fs = require('fs');
+
 
 let Tagger = natural.BrillPOSTagger;
 let baseFolder = './node_modules/natural/lib/natural/brill_pos_tagger';
@@ -68,12 +70,21 @@ app.post("/submit_haiku", function (req, res) {
                     case "NNPS":
                     case "WP":
                     case "WP$":
-                        console.log(pos[0] + " is a " + pos[1] + "!");
+                        let text = pr.parseLibrary(
+                                     fs.readFileSync(
+                                     __dirname + "/pos_word_files/nouns/"
+                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
+                                     + "syllablenouns.txt", {encoding: 'utf8'}));
+                        console.log(text);
                         break;
                     case "JJ":
                     case "JJR":
                     case "JJS":
-                    case "NN":
+                        let text = pr.parseLibrary(
+                                     fs.readFileSync(
+                                     __dirname + "/pos_word_files/adjectives/"
+                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
+                                     + "syllableadjectives.txt", {encoding: 'utf8'}));
                         console.log(pos[0] + " is a " + pos[1] + "!");
                         break;
                     case "VB":
@@ -82,11 +93,21 @@ app.post("/submit_haiku", function (req, res) {
                     case "VBN":
                     case "VBP":
                     case "VBZ":
+                        let text = pr.parseLibrary(
+                                     fs.readFileSync(
+                                     __dirname + "/pos_word_files/verbs/"
+                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
+                                     + "syllableverbs.txt", {encoding: 'utf8'}));
                         console.log(pos[0] + " is a " + pos[1] + "!");
                         break;
                     case "RB":
                     case "RBR":
                     case "RBS":
+                        let text = pr.parseLibrary(
+                                     fs.readFileSync(
+                                     __dirname + "/pos_word_files/adverbs/"
+                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
+                                     + "syllableadverbs.txt", {encoding: 'utf8'}));
                         console.log(pos[0] + " is a " + pos[1] + "!");
                         break;
                     default:

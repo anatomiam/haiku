@@ -47,7 +47,7 @@ exports.stresses = (sounds) => {
 // takes an array of stress patterns, returns an array of arrays of words that have the same stress pattern 
 exports.sameStress = (stresses) => {
     let sameStress = [];
-    let newLine = []
+
     stresses.map((stress) => {
         sameStress.push(pronouncing.searchStresses(stress));
     })
@@ -58,7 +58,6 @@ exports.sameStress = (stresses) => {
 // takes an array of words, returns an array of arrays of words that rhyme for each
 exports.sameRhymes = (words) => {
     let wordRhymes = [];
-    let newLine = [];
 
     words.map((word) => {
         wordRhymes.push(pronouncing.rhymes(word));
@@ -76,6 +75,12 @@ exports.intersectTwoLines = (array1, array2) => {
     })
 
     return intersected;
+}
+
+exports.intersectLineWithPOSLibrary = (line, library) => {
+    return line.map((word) => {
+        _.intersection(word, library);
+    })
 }
 
 // takes array of arrays, return random for each inside array 
