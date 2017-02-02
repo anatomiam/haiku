@@ -94,8 +94,8 @@ app.post("/submit_haiku", function (req, res) {
                                      __dirname + "/pos_word_files/nouns/"
                                      + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
                                      + "syllablenouns.txt", {encoding: 'utf8'}));
-                        let xx1 = _.intersection(newRhymeHaiku[0][i], text1);
-                        console.log(newRhymeHaiku[0][i]);
+                        let xx1 = _.intersection(stressAndRhymeLists[0][i], text1);
+                        console.log(xx1);
                         break;
                     case "JJ":
                     case "JJR":
@@ -105,7 +105,7 @@ app.post("/submit_haiku", function (req, res) {
                                      __dirname + "/pos_word_files/adjectives/"
                                      + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
                                      + "syllableadjectives.txt", {encoding: 'utf8'}));
-                        let xx2 = _.intersection(newRhymeHaiku[0][i], text2);
+                        let xx2 = _.intersection(stressAndRhymeLists[0][i], text2);
                         console.log(xx2);
                         break;
                     case "VB":
@@ -119,7 +119,7 @@ app.post("/submit_haiku", function (req, res) {
                                      __dirname + "/pos_word_files/verbs/"
                                      + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
                                      + "syllableverbs.txt", {encoding: 'utf8'}));
-                        let xx3 = _.intersection(newRhymeHaiku[0][i], text3);
+                        let xx3 = _.intersection(stressAndRhymeLists[0][i], text3);
                         console.log(xx3);
                         break;
                     case "RB":
@@ -130,7 +130,7 @@ app.post("/submit_haiku", function (req, res) {
                                      __dirname + "/pos_word_files/adverbs/"
                                      + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
                                      + "syllableadverbs.txt", {encoding: 'utf8'}));
-                        let xx4 = _.intersection(newRhymeHaiku[0][i], text4);
+                        let xx4 = _.intersection(stressAndRhymeLists[0][i], text4);
                         console.log(xx4);
                         break;
                     default:

@@ -129,7 +129,7 @@ exports.parseLibrary = (library) => {
     words = [];
     _.forEach(library.split("\n"), (word) => {
         if (word.length == 0) { return; }
-        else { words.push(word) }
+        else { words.push(word.replace(/[\r]/g, '')) }
     })
     return words;
 }
