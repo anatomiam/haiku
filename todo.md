@@ -1,9 +1,10 @@
 - preserve punctuation
-- reduce cmu dictionary to a more common set of words
 - description div
-- mimic sentence structure, pos tagger + display
+- style for production
+- connect to personal website
 - colored phonectic patterns
 - add fallback syllable count to increase accuracy for non matched words
+- release it
 - down the road:
 - --- expand from haiku to other forms of poetry
 - --- --- http://www.poemofquotes.com/articles/poetry_forms.php
