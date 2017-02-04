@@ -5,16 +5,11 @@ const bodyParser = require('body-parser');
 const pr = require('./poetryparser');
 const pronouncing = require('pronouncing');
 const app = express();
-const natural = require('natural');
+const pos = require('pos');
 const fs = require('fs');
 const _ = require('lodash');
 
-
-let Tagger = natural.BrillPOSTagger;
-let baseFolder = './node_modules/natural/lib/natural/brill_pos_tagger';
-let rules = baseFolder + '/data/English/tr_from_posjs.txt';
-let lexicon = baseFolder + '/data/English/lexicon_from_posjs.json';
-let defaultCategory = 'N';
+let tagger = new pos.Tagger();
 
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :stat' +
@@ -71,16 +66,12 @@ app.post("/submit_haiku", function (req, res) {
 
     finalHaiku = pr.runHaikuThrough(pr.removeUndefined, cleanHaiku, stressAndRhymeHaiku);
 
-    let tagger = new Tagger(lexicon, rules, defaultCategory, function(err) {
-        if (err) {
-            console.log(err);
-        } else {
             let one = tagger.tag(cleanHaiku[0]);
             let two = tagger.tag(cleanHaiku[1]);
             let three = tagger.tag(cleanHaiku[2]);
 
-
-            one.map((pos, i) => {
+            // console.log(one, two, three);
+            let firstLine = one.map((pos, i) => {
                 switch(pos[1]) {
                     case "N":
                     case "NN":
@@ -92,10 +83,10 @@ app.post("/submit_haiku", function (req, res) {
                         let text1 = pr.parseLibrary(
                                      fs.readFileSync(
                                      __dirname + "/pos_word_files/nouns/"
-                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
+                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
                                      + "syllablenouns.txt", {encoding: 'utf8'}));
-                        let xx1 = _.intersection(stressAndRhymeLists[0][i], text1);
-                        console.log(xx1);
+                        return xx1 = _.intersection(stressAndRhymeLists[0][i], text1);
+                        // console.log(xx1);
                         break;
                     case "JJ":
                     case "JJR":
@@ -103,10 +94,10 @@ app.post("/submit_haiku", function (req, res) {
                         let text2 = pr.parseLibrary(
                                      fs.readFileSync(
                                      __dirname + "/pos_word_files/adjectives/"
-                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
+                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
                                      + "syllableadjectives.txt", {encoding: 'utf8'}));
-                        let xx2 = _.intersection(stressAndRhymeLists[0][i], text2);
-                        console.log(xx2);
+                        return xx2 = _.intersection(stressAndRhymeLists[0][i], text2);
+                        // console.log(xx2);
                         break;
                     case "VB":
                     case "VBD":
@@ -117,10 +108,11 @@ app.post("/submit_haiku", function (req, res) {
                         let text3 = pr.parseLibrary(
                                      fs.readFileSync(
                                      __dirname + "/pos_word_files/verbs/"
-                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
+                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
                                      + "syllableverbs.txt", {encoding: 'utf8'}));
-                        let xx3 = _.intersection(stressAndRhymeLists[0][i], text3);
-                        console.log(xx3);
+                        // console.log(pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])));
+                        return xx3 = _.intersection(stressAndRhymeLists[0][i], text3);
+                        // console.log(xx3);
                         break;
                     case "RB":
                     case "RBR":
@@ -128,25 +120,27 @@ app.post("/submit_haiku", function (req, res) {
                         let text4 = pr.parseLibrary(
                                      fs.readFileSync(
                                      __dirname + "/pos_word_files/adverbs/"
-                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])) 
+                                     + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
                                      + "syllableadverbs.txt", {encoding: 'utf8'}));
-                        let xx4 = _.intersection(stressAndRhymeLists[0][i], text4);
-                        console.log(xx4);
+                        return xx4 = _.intersection(stressAndRhymeLists[0][i], text4);
+                        // console.log(xx4);
                         break;
                     default:
                         console.log("not recognized yet, but " + pos[0] + " is a " + pos[1] + "!");
                 }
             })
-        }
-    })
+        
+    
 
+    console.log(firstLine);
+    // console.log(tagger);
     res.send([
         [finalHaiku[0], finalHaiku[1], finalHaiku[2]],
         [numSyllablesHaiku[0], numSyllablesHaiku[1], numSyllablesHaiku[2]]
     ]);
 }),
 
-// Always return the main index.html, so react-router render the route in the
+// Always return the main index.html, so react-router renders the route in the
 // client
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
