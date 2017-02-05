@@ -91,9 +91,12 @@ exports.intersectLineWithPOSLibrary = (line, library) => {
 // takes array of arrays, return random for each inside array 
 exports.randomWord = (line) => {
     let newLine = []
+    if (line != undefined)
         line.map((words) => {
+            if (words != undefined) {
             newLine.push(words[_.random(words.length)])
-        })
+            }
+        });
 
     return newLine
 }
@@ -137,16 +140,6 @@ exports.parseLibrary = (library) => {
         else { words.push(word.replace(/[\r]/g, '')) }
     })
     return words;
-}
-
-exports.tagHaiku = (cleanHaiku) => {
-
-   let posLines = [];
-   
-   cleanHaiku.map((lined) => {
-           posLines.push(tagger.tag(lined)); 
-    })
-    return posLines;
 }
 
 exports.posHaiku = (taggedLines) => {

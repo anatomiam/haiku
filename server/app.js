@@ -60,82 +60,87 @@ app.post("/submit_haiku", function (req, res) {
 
     stressAndRhymeLists = pr.runHaikuThrough(pr.intersectTwoLines, newLineHaiku, newRhymeHaiku);
 
-    // posList = pr.runHaikuThrough(pr.intersectTwoLines, newLineHaiku, newRhymeHaiku);
-
     stressAndRhymeHaiku = pr.runHaikuThrough(pr.randomWord, stressAndRhymeLists);
 
-    finalHaiku = pr.runHaikuThrough(pr.removeUndefined, cleanHaiku, stressAndRhymeHaiku);
+    // finalHaiku = pr.runHaikuThrough(pr.removeUndefined, cleanHaiku, stressAndRhymeHaiku);
 
-    tagged = pr.tagHaiku(cleanHaiku);
-    done = pr.posHaiku(tagged);
-    // let one = tagger.tag(cleanHaiku[0]);
-    // let two = tagger.tag(cleanHaiku[1]);
-    // let three = tagger.tag(cleanHaiku[2]);
+    let tagged = cleanHaiku.map((line) => {
+        return tagger.tag(line);
+    })
 
-    // // console.log(one, two, three);
-    // let firstLine = one.map((pos, i) => {
-    //     switch(pos[1]) {
-    //         case "N":
-    //         case "NN":
-    //         case "NNS":
-    //         case "NNP":
-    //         case "NNPS":
-    //         case "WP":
-    //         case "WP$":
-    //             let text1 = pr.parseLibrary(
-    //                             fs.readFileSync(
-    //                             __dirname + "/pos_word_files/nouns/"
-    //                             + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
-    //                             + "syllablenouns.txt", {encoding: 'utf8'}));
-    //             return xx1 = _.intersection(stressAndRhymeLists[0][i], text1);
-    //             // console.log(xx1);
-    //             break;
-    //         case "JJ":
-    //         case "JJR":
-    //         case "JJS":
-    //             let text2 = pr.parseLibrary(
-    //                             fs.readFileSync(
-    //                             __dirname + "/pos_word_files/adjectives/"
-    //                             + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
-    //                             + "syllableadjectives.txt", {encoding: 'utf8'}));
-    //             return xx2 = _.intersection(stressAndRhymeLists[0][i], text2);
-    //             // console.log(xx2);
-    //             break;
-    //         case "VB":
-    //         case "VBD":
-    //         case "VBG":
-    //         case "VBN":
-    //         case "VBP":
-    //         case "VBZ":
-    //             let text3 = pr.parseLibrary(
-    //                             fs.readFileSync(
-    //                             __dirname + "/pos_word_files/verbs/"
-    //                             + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
-    //                             + "syllableverbs.txt", {encoding: 'utf8'}));
-    //             // console.log(pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])));
-    //             return xx3 = _.intersection(stressAndRhymeLists[0][i], text3);
-    //             // console.log(xx3);
-    //             break;
-    //         case "RB":
-    //         case "RBR":
-    //         case "RBS":
-    //             let text4 = pr.parseLibrary(
-    //                             fs.readFileSync(
-    //                             __dirname + "/pos_word_files/adverbs/"
-    //                             + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
-    //                             + "syllableadverbs.txt", {encoding: 'utf8'}));
-    //             return xx4 = _.intersection(stressAndRhymeLists[0][i], text4);
-    //             // console.log(xx4);
-    //             break;
-    //         default:
-    //             console.log("not recognized yet, but " + pos[0] + " is a " + pos[1] + "!");
-    //     }
-    // })
-        
+   let taggedIntersection = tagged.map((line, t) => {
+    //    console.log(line);
+      return line.map((pos, i) => {
+
+        switch(pos[1]) {
+            case "N":
+            case "NN":
+            case "NNS":
+            case "NNP":
+            case "NNPS":
+            case "WP":
+            case "WP$":
+                let text1 = pr.parseLibrary(
+                                fs.readFileSync(
+                                __dirname + "/pos_word_files/nouns/"
+                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
+                                + "syllablenouns.txt", {encoding: 'utf8'}));
+                // console.log(pos[0] + " is a " + pos[1]);
+                return xx1 = _.intersection(stressAndRhymeLists[t][i], text1);
+                break;
+            case "JJ":
+            case "JJR":
+            case "JJS":
+                let text2 = pr.parseLibrary(
+                                fs.readFileSync(
+                                __dirname + "/pos_word_files/adjectives/"
+                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
+                                + "syllableadjectives.txt", {encoding: 'utf8'}));
+                return xx2 = _.intersection(stressAndRhymeLists[t][i], text2);
+                // console.log(xx2);
+                break;
+            case "VB":
+            case "VBD":
+            case "VBG":
+            case "VBN":
+            case "VBP":
+            case "VBZ":
+                let text3 = pr.parseLibrary(
+                                fs.readFileSync(
+                                __dirname + "/pos_word_files/verbs/"
+                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
+                                + "syllableverbs.txt", {encoding: 'utf8'}));
+                // console.log(pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])));
+                return xx3 = _.intersection(stressAndRhymeLists[t][i], text3);
+                // console.log(xx3);
+                break;
+            case "RB":
+            case "RBR":
+            case "RBS":
+                let text4 = pr.parseLibrary(
+                                fs.readFileSync(
+                                __dirname + "/pos_word_files/adverbs/"
+                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
+                                + "syllableadverbs.txt", {encoding: 'utf8'}));
+                return xx4 = _.intersection(stressAndRhymeLists[t][i], text4);
+                // console.log(xx4);
+                break;
+            default:
+                // console.log("not recognized yet, but " + pos[0] + " is a " + pos[1] + "!");
+        }
+    })
+       })
     
 
-    console.log(done);
-    // console.log(tagger);
+    console.log("first: ", taggedIntersection[0],
+                "second: ", taggedIntersection[1],
+                "third: ", taggedIntersection[2]);
+
+    taggedIntersection2 = pr.runHaikuThrough(pr.randomWord, taggedIntersection);
+                
+
+    finalHaiku = pr.runHaikuThrough(pr.removeUndefined, cleanHaiku, taggedIntersection2);
+                
     res.send([
         [finalHaiku[0], finalHaiku[1], finalHaiku[2]],
         [numSyllablesHaiku[0], numSyllablesHaiku[1], numSyllablesHaiku[2]]
