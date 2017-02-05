@@ -1,5 +1,10 @@
 const pronouncing = require('pronouncing');
 const _ = require('lodash');
+const pos = require('pos');
+var fs = require('fs');
+
+
+let tagger = new pos.Tagger();
 
 // takes a string input, splits it into an array of lowercased words
 exports.cleanLine = (line) => {
@@ -133,3 +138,77 @@ exports.parseLibrary = (library) => {
     })
     return words;
 }
+
+exports.tagHaiku = (cleanHaiku) => {
+
+   let posLines = [];
+   
+   cleanHaiku.map((lined) => {
+           posLines.push(tagger.tag(lined)); 
+    })
+    return posLines;
+}
+
+exports.posHaiku = (taggedLines) => {
+
+    partsOfSpeech = [];
+
+    taggedLines.map((line) => {
+        partsOfSpeech.push(
+            line.map((pos, i) => {
+        switch(pos[1]) {
+            case "N":
+            case "NN":
+            case "NNS":
+            case "NNP":
+            case "NNPS":
+            case "WP":
+            case "WP$":
+                let text1 = exports.parseLibrary(
+                                fs.readFileSync(
+                                __dirname + "/pos_word_files/nouns/"
+                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
+                                + "syllablenouns.txt", {encoding: 'utf8'}));
+                return xx1 = _.intersection(stressAndRhymeLists[0][i], text1);
+                // console.log(xx1);
+                break;
+            case "JJ":
+            case "JJR":
+            case "JJS":
+                let text2 = exports.parseLibrary(
+                                fs.readFileSync(
+                                __dirname + "/pos_word_files/adjectives/"
+                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
+                                + "syllableadjectives.txt", {encoding: 'utf8'}));
+                return xx2 = _.intersection(stressAndRhymeLists[0][i], text2);
+                // console.log(xx2);
+                break;
+            case "VB":
+            case "VBD":
+            case "VBG":
+            case "VBN":
+            case "VBP":
+            case "VBZ":
+                let text3 = exports.parseLibrary(
+                                fs.readFileSync(
+                                __dirname + "/pos_word_files/verbs/"
+                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
+                                + "syllableverbs.txt", {encoding: 'utf8'}));
+                // console.log(pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])));
+                return xx3 = _.intersection(stressAndRhymeLists[0][i], text3);
+                // console.log(xx3);
+                break;
+            case "RB":
+            case "RBR":
+            case "RBS":
+                let text4 = exports.parseLibrary(
+                                fs.readFileSync(
+                                __dirname + "/pos_word_files/adverbs/"
+                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
+                                + "syllableadverbs.txt", {encoding: 'utf8'}));
+                return xx4 = _.intersection(stressAndRhymeLists[0][i], text4);
+                // console.log(xx4);
+                break;
+            default:
+                console.log("not recognized yet, but " + pos[0] + " is a " + pos[1] + "!");
+    }}))})}
