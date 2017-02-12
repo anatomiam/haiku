@@ -157,7 +157,7 @@ app.post("/submit_haiku", function (req, res) {
 // Always return the main index.html, so react-router renders the route in the
 // client
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../react-ui/', './build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
 }),
 
 module.exports = app;
