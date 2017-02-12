@@ -60,7 +60,6 @@ app.post("/submit_haiku", function (req, res) {
 
     stressAndRhymeLists = pr.runHaikuThrough(pr.intersectTwoLines, newLineHaiku, newRhymeHaiku);
 
-    stressAndRhymeHaiku = pr.runHaikuThrough(pr.randomWord, stressAndRhymeLists);
 
     // finalHaiku = pr.runHaikuThrough(pr.removeUndefined, cleanHaiku, stressAndRhymeHaiku);
 
@@ -132,14 +131,22 @@ app.post("/submit_haiku", function (req, res) {
        })
     
 
-    console.log("first: ", taggedIntersection[0],
-                "second: ", taggedIntersection[1],
-                "third: ", taggedIntersection[2]);
+
+
+    
+    stressAndRhymeHaiku = pr.runHaikuThrough(pr.randomWord, stressAndRhymeLists);
+
+    stressAndRhymeHaiku2 = pr.runHaikuThrough(pr.removeEmpty, cleanHaiku, stressAndRhymeHaiku);
 
     taggedIntersection2 = pr.runHaikuThrough(pr.randomWord, taggedIntersection);
                 
+    almostFinalHaiku = pr.runHaikuThrough(pr.removeEmpty, stressAndRhymeHaiku2, taggedIntersection2);
 
-    finalHaiku = pr.runHaikuThrough(pr.removeUndefined, cleanHaiku, taggedIntersection2);
+    finalHaiku = pr.runHaikuThrough(pr.removeUndefined, cleanHaiku, almostFinalHaiku);
+
+        console.log("first: ", stressAndRhymeHaiku2[0],
+                "second: ", stressAndRhymeHaiku2[1],
+                "third: ", stressAndRhymeHaiku2[2]);
                 
     res.send([
         [finalHaiku[0], finalHaiku[1], finalHaiku[2]],

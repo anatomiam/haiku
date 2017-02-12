@@ -93,8 +93,14 @@ exports.randomWord = (line) => {
     let newLine = []
     if (line != undefined)
         line.map((words) => {
-            if (words != undefined) {
-            newLine.push(words[_.random(words.length)])
+            if (words == undefined) {
+                newLine.push(undefined);
+            }
+            else if (words.length == 0) {
+                newLine.push('*empty*');
+            }
+            else {
+                newLine.push(words[_.random(words.length)])
             }
         });
 
@@ -116,6 +122,18 @@ exports.removeUndefined = (original, generated) => {
     return newest;
 }
 
+// function as removeUndefined, except removes *empty* and replaces with new random word
+exports.removeEmpty = (randomWord, generated) => {
+    newest = []
+    generated.map((word, i) => {
+        if (word === '*empty*') {
+            newest.push(randomWord[i]);
+        } else {
+            newest.push(word);
+        }
+    })
+    return newest;
+}
 
 // takes a function, and one or two arrays of arrays, maps each array through the function and returns and array of arrays
 exports.runHaikuThrough = (func, haiku, haiku2 = false) => {
@@ -141,67 +159,3 @@ exports.parseLibrary = (library) => {
     })
     return words;
 }
-
-exports.posHaiku = (taggedLines) => {
-
-    partsOfSpeech = [];
-
-    taggedLines.map((line) => {
-        partsOfSpeech.push(
-            line.map((pos, i) => {
-        switch(pos[1]) {
-            case "N":
-            case "NN":
-            case "NNS":
-            case "NNP":
-            case "NNPS":
-            case "WP":
-            case "WP$":
-                let text1 = exports.parseLibrary(
-                                fs.readFileSync(
-                                __dirname + "/pos_word_files/nouns/"
-                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
-                                + "syllablenouns.txt", {encoding: 'utf8'}));
-                return xx1 = _.intersection(stressAndRhymeLists[0][i], text1);
-                // console.log(xx1);
-                break;
-            case "JJ":
-            case "JJR":
-            case "JJS":
-                let text2 = exports.parseLibrary(
-                                fs.readFileSync(
-                                __dirname + "/pos_word_files/adjectives/"
-                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
-                                + "syllableadjectives.txt", {encoding: 'utf8'}));
-                return xx2 = _.intersection(stressAndRhymeLists[0][i], text2);
-                // console.log(xx2);
-                break;
-            case "VB":
-            case "VBD":
-            case "VBG":
-            case "VBN":
-            case "VBP":
-            case "VBZ":
-                let text3 = exports.parseLibrary(
-                                fs.readFileSync(
-                                __dirname + "/pos_word_files/verbs/"
-                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
-                                + "syllableverbs.txt", {encoding: 'utf8'}));
-                // console.log(pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])));
-                return xx3 = _.intersection(stressAndRhymeLists[0][i], text3);
-                // console.log(xx3);
-                break;
-            case "RB":
-            case "RBR":
-            case "RBS":
-                let text4 = exports.parseLibrary(
-                                fs.readFileSync(
-                                __dirname + "/pos_word_files/adverbs/"
-                                + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
-                                + "syllableadverbs.txt", {encoding: 'utf8'}));
-                return xx4 = _.intersection(stressAndRhymeLists[0][i], text4);
-                // console.log(xx4);
-                break;
-            default:
-                console.log("not recognized yet, but " + pos[0] + " is a " + pos[1] + "!");
-    }}))})}
