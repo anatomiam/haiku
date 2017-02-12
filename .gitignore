@@ -2,7 +2,6 @@
 
 # dependencies
 node_modules
-pos_word_files
 
 # testing
 coverage
