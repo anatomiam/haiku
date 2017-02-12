@@ -18,16 +18,11 @@
     "react-dom": "^15.4.2",
     "react-router": "^3.0.0"
   },
-    "cacheDirectories": [
-    "node_modules",
-    "react-ui/node_modules"
-  ],
-    "repository": {
-    "type": "git",
-    "url": "https://github.com/anatomiam/haiku.git"
-  },
   "scripts": {
-    "start": "node server",
-    "heroku-postbuild": "cd react-ui/ && npm install --only=dev && npm install && npm run build"
-  }
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+    "proxy": "http://localhost:9000"
 }
