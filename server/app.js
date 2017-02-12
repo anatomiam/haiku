@@ -81,7 +81,7 @@ app.post("/submit_haiku", function (req, res) {
             case "WP$":
                 let text1 = pr.parseLibrary(
                                 fs.readFileSync(
-                                __dirname + "/pos_word_files/nouns/"
+                                "./pos_word_files/nouns/"
                                 + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
                                 + "syllablenouns.txt", {encoding: 'utf8'}));
                 // console.log(pos[0] + " is a " + pos[1]);
@@ -92,7 +92,7 @@ app.post("/submit_haiku", function (req, res) {
             case "JJS":
                 let text2 = pr.parseLibrary(
                                 fs.readFileSync(
-                                __dirname + "/pos_word_files/adjectives/"
+                                "./pos_word_files/adjectives/"
                                 + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
                                 + "syllableadjectives.txt", {encoding: 'utf8'}));
                 return xx2 = _.intersection(stressAndRhymeLists[t][i], text2);
@@ -106,7 +106,7 @@ app.post("/submit_haiku", function (req, res) {
             case "VBZ":
                 let text3 = pr.parseLibrary(
                                 fs.readFileSync(
-                                __dirname + "/pos_word_files/verbs/"
+                                "./pos_word_files/verbs/"
                                 + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
                                 + "syllableverbs.txt", {encoding: 'utf8'}));
                 // console.log(pronouncing.syllableCount(pronouncing.phonesForWord(pos[0])));
@@ -118,7 +118,7 @@ app.post("/submit_haiku", function (req, res) {
             case "RBS":
                 let text4 = pr.parseLibrary(
                                 fs.readFileSync(
-                                __dirname + "/pos_word_files/adverbs/"
+                                "./pos_word_files/adverbs/"
                                 + pronouncing.syllableCount(pronouncing.phonesForWord(pos[0][0])) 
                                 + "syllableadverbs.txt", {encoding: 'utf8'}));
                 return xx4 = _.intersection(stressAndRhymeLists[t][i], text4);
