@@ -1,4 +1,4 @@
-const pronouncing = require('pronouncing');
+const pronouncing = require('./pronouncingjs/build/pronouncing-browser.js');
 const _ = require('lodash');
 const pos = require('pos');
 var fs = require('fs');
