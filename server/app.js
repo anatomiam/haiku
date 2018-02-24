@@ -16,7 +16,7 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
         'us :res[content-length] :response-time ms'));
 
 // Serve static assets
-app.use(express.static(path.resolve(__dirname, '../react-ui/', './build')));
+app.use(express.static(path.resolve(__dirname, '../react-ui/', './build_final')));
 
 // for parsing application/json
 app.use(bodyParser.json());
@@ -157,7 +157,7 @@ app.post("/submit_haiku", function (req, res) {
 // Always return the main index.html, so react-router renders the route in the
 // client
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '../react-ui/build_final', 'index.html'));
 }),
 
 module.exports = app;
